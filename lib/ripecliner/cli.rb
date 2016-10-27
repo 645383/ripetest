@@ -1,25 +1,28 @@
 module RIPECLINER
 
   class CLI
-
+    attr_reader :dump, :command
     def initialize(params)
       @command  = params[0]
-      @argument = params[1]
-
-      invoke_command
+      @dump = RIPECLINER::BGPDump.new params[1]
     end
 
     def invoke_command
+      dump.send command
+
+      #can send command here and not create conditions. it will call command on the BGPDump instance
+
+
+
       case @command
       when "download"
-        dump = RIPECLINER::BGPDump.new
-        dump.date = @argument
+        dump.date = @date
         dump.download
       when "convert"
         dump = RIPECLINER::BGPDump.new
 
-        if @argument
-          dump.file = @argument
+        if @date
+          dump.file = @date
         else
           raise ArgumentError.new("Please, specify dump file for converting / downloading.")
         end

@@ -4,7 +4,7 @@ require "bundler/setup"
 require "ripecliner"
 
 begin
-  RIPECLINER::CLI.new ARGV
+  RIPECLINER::CLI.new(ARGV).invoke_command
 rescue ArgumentError => e
   puts "ERROR: #{e.message}\n\n---"
   RIPECLINER::CLI.print_help
